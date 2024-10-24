@@ -5,7 +5,7 @@ sys.dont_write_bytecode = True
 from hokireceh_claimer import base
 from core.token import get_token
 from core.info import get_info
-from core.task import process_do_task
+from core.task import process_do_task, process_claim_ref
 from core.farm import process_farming
 
 import time
@@ -26,6 +26,10 @@ class PitchTalk:
         # Get config
         self.auto_do_task = base.get_config(
             config_file=self.config_file, config_name="auto-do-task"
+        )
+
+        self.auto_claim_ref = base.get_config(
+            config_file=self.config_file, config_name="auto-claim-ref"
         )
 
         self.auto_farm = base.get_config(
@@ -50,23 +54,30 @@ class PitchTalk:
 
                     if token:
 
-                        get_info(token=token)
+                        get_info(data=data, token=token)
 
                         # Do task
                         if self.auto_do_task:
                             base.log(f"{base.yellow}Auto Do Task: {base.green}ON")
-                            process_do_task(token=token)
+                            process_do_task(data=data, token=token)
                         else:
                             base.log(f"{base.yellow}Auto Do Task: {base.red}OFF")
+
+                        # Claim ref
+                        if self.auto_claim_ref:
+                            base.log(f"{base.yellow}Auto Claim Ref: {base.green}ON")
+                            process_claim_ref(data=data, token=token)
+                        else:
+                            base.log(f"{base.yellow}Auto Claim Ref: {base.red}OFF")
 
                         # Farm
                         if self.auto_farm:
                             base.log(f"{base.yellow}Auto Farm: {base.green}ON")
-                            process_farming(token=token)
+                            process_farming(data=data, token=token)
                         else:
                             base.log(f"{base.yellow}Auto Farm: {base.red}OFF")
 
-                        get_info(token=token)
+                        get_info(data=data, token=token)
 
                     else:
                         base.log(f"{base.red}Token not found! Please get new query id")
