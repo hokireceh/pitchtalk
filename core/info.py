@@ -4,12 +4,15 @@ from hokireceh_claimer import base
 from core.headers import headers
 
 
-def get_info(token, proxies=None):
+def get_info(data, token, proxies=None):
     url = "https://api.pitchtalk.app/v1/api/users/me"
 
     try:
         response = requests.get(
-            url=url, headers=headers(token=token), proxies=proxies, timeout=20
+            url=url,
+            headers=headers(data=data, token=token),
+            proxies=proxies,
+            timeout=20,
         )
         data = response.json()
         coins = data["coins"]

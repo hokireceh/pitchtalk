@@ -5,12 +5,15 @@ from hokireceh_claimer import base
 from core.headers import headers
 
 
-def farmings(token, proxies=None):
+def farmings(data, token, proxies=None):
     url = "https://api.pitchtalk.app/v1/api/farmings"
 
     try:
         response = requests.get(
-            url=url, headers=headers(token=token), proxies=proxies, timeout=20
+            url=url,
+            headers=headers(data=data, token=token),
+            proxies=proxies,
+            timeout=20,
         )
         data = response.json()
         end_time = data["endTime"]
@@ -20,13 +23,13 @@ def farmings(token, proxies=None):
         return None
 
 
-def create_farming(token, proxies=None):
+def create_farming(data, token, proxies=None):
     url = "https://api.pitchtalk.app/v1/api/users/create-farming"
 
     try:
         response = requests.post(
             url=url,
-            headers=headers(token=token),
+            headers=headers(data=data, token=token),
             proxies=proxies,
             timeout=20,
         )
@@ -38,13 +41,13 @@ def create_farming(token, proxies=None):
         return None
 
 
-def claim_farming(token, proxies=None):
+def claim_farming(data, token, proxies=None):
     url = "https://api.pitchtalk.app/v1/api/users/claim-farming"
 
     try:
         response = requests.post(
             url=url,
-            headers=headers(token=token),
+            headers=headers(data=data, token=token),
             proxies=proxies,
             timeout=20,
         )
@@ -55,9 +58,9 @@ def claim_farming(token, proxies=None):
         return None
 
 
-def process_farming(token, proxies=None):
+def process_farming(data, token, proxies=None):
     try:
-        end_time = farmings(token=token, proxies=proxies)
+        end_time = farmings(data=data, token=token, proxies=proxies)
         if end_time:
             formatted_end_time = datetime.strptime(
                 end_time, "%Y-%m-%dT%H:%M:%S.%fZ"
@@ -70,10 +73,12 @@ def process_farming(token, proxies=None):
                 )
             else:
                 base.log(f"{base.white}Auto Farm: {base.yellow}Claiming...")
-                start_claim_farming = claim_farming(token=token, proxies=proxies)
+                start_claim_farming = claim_farming(
+                    data=data, token=token, proxies=proxies
+                )
         else:
             base.log(f"{base.white}Auto Farm: {base.yellow}Starting farming...")
-            end_time_cre = create_farming(token=token, proxies=proxies)
+            end_time_cre = create_farming(data=data, token=token, proxies=proxies)
             formatted_end_time_cre = datetime.strptime(
                 end_time_cre, "%Y-%m-%dT%H:%M:%S.%fZ"
             ).replace(tzinfo=timezone.utc)
