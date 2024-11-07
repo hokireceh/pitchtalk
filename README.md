@@ -15,10 +15,13 @@ Join our Telegram group to stay updated and get instructions on how to use this 
 
 ## 🌟 Features
 
-| Feature      | Status | Description               |
-| ------------ | ------ | ------------------------- |
-| Auto Do Task | On/Off | Complete tasks            |
-| Auto Farm    | On/Off | Farm points every 6 hours |
+| Feature                | Status | Description                                  |
+| ---------------------- | ------ | -------------------------------------------- |
+| Auto Do Task           | On/Off | Complete tasks                               |
+| Auto Claim Ref         | On/Off | Claim points from your refs                  |
+| Auto Upgrade Character | On/Off | Upgrade character to get more points         |
+| Auto Upgrade Speed     | On/Off | Upgrade speed to get more points and tickets |
+| Auto Farm              | On/Off | Farm points every 6 hours                    |
 
 ## 🚀 Run File
 
