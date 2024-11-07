@@ -20,8 +20,15 @@ def get_info(data, token, proxies=None):
         referral_rewards = data["referralRewards"]
         streak = data["loginStreak"]
 
+        level = data["level"]
+        speed_level = data["speedBoostLevel"]
+        time_level = data["timeBoostLevel"]
+
         base.log(
             f"{base.green}Coins: {base.white}{coins:,} - {base.green}Tickets: {base.white}{tickets:,} - {base.green}Referral Rewards: {base.white}{referral_rewards} - {base.green}Streak: {base.white}{streak}"
+        )
+        base.log(
+            f"{base.green}Character Level: {base.white}{level} - {base.green}Speed Level: {base.white}{speed_level} - {base.green}Time Level: {base.white}{time_level}"
         )
         return data
     except:
