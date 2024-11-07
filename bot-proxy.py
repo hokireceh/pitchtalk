@@ -6,6 +6,7 @@ from hokireceh_claimer import base
 from core.token import get_token
 from core.info import get_info
 from core.task import process_do_task, process_claim_ref
+from core.upgrade import process_upgrade_character, process_upgrade_speed
 from core.farm import process_farming
 
 import time
@@ -31,6 +32,14 @@ class PitchTalk:
 
         self.auto_claim_ref = base.get_config(
             config_file=self.config_file, config_name="auto-claim-ref"
+        )
+
+        self.auto_upgrade_character = base.get_config(
+            config_file=self.config_file, config_name="auto-upgrade-character"
+        )
+
+        self.auto_upgrade_speed = base.get_config(
+            config_file=self.config_file, config_name="auto-upgrade-speed"
         )
 
         self.auto_farm = base.get_config(
@@ -79,6 +88,28 @@ class PitchTalk:
                             process_claim_ref(data=data, token=token, proxies=proxies)
                         else:
                             base.log(f"{base.yellow}Auto Claim Ref: {base.red}OFF")
+
+                        # Upgrade character
+                        if self.auto_upgrade_character:
+                            base.log(
+                                f"{base.yellow}Auto Upgrade Character: {base.green}ON"
+                            )
+                            process_upgrade_character(
+                                data=data, token=token, proxies=proxies
+                            )
+                        else:
+                            base.log(
+                                f"{base.yellow}Auto Upgrade Character: {base.red}OFF"
+                            )
+
+                        # Upgrade speed
+                        if self.auto_upgrade_speed:
+                            base.log(f"{base.yellow}Auto Upgrade Speed: {base.green}ON")
+                            process_upgrade_speed(
+                                data=data, token=token, proxies=proxies
+                            )
+                        else:
+                            base.log(f"{base.yellow}Auto Upgrade Speed: {base.red}OFF")
 
                         # Farm
                         if self.auto_farm:
